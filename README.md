@@ -5,7 +5,7 @@ ex) [Add] - 로그인 기능 구현
 
 ex) 만약 두 개 이상을 동시에 추가해야한다면 , [Add, Build]
 
-## 1. [commit Type]
+## 1. 커밋타입[commit Type]
 
 >[Add] - 새로운 기능 추가<br/>
 [Fix] - 버그 수정<br/>
