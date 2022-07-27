@@ -1,5 +1,7 @@
 <template>
-  <h1>SWIT</h1>
+  <div class="error">
+    에러
+  </div>
 </template>
 
 <script>
