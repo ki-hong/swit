@@ -1,45 +1,31 @@
 package com.swit.user.security;
 
-import lombok.*;
+import com.swit.user.entity.User;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 // 인증 대상 객체
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
-@Getter @Setter
 public class SecurityUser implements UserDetails {
-    @Id
-    @Column(name = "code")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long code;
-
-    @Column(name = "email", unique = true)
-    private String email;
-
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "auth")
-    private String auth;
+    private User user;
 
     @Builder
-    public SecurityUser(String email, String password, String auth) {
-        this.email = email;
-        this.password = password;
-        this.auth = auth;
+    public SecurityUser(User user){
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<SimpleGrantedAuthority> roles = new HashSet<>();
-        for (String role : auth.split(",")){
+        for (String role : user.getAuth().split(",")){
             roles.add(new SimpleGrantedAuthority(role));
         }
         return roles;
@@ -47,12 +33,12 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return email;
+        return user.getEmail();
     }
 
     @Override
@@ -74,4 +60,5 @@ public class SecurityUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
